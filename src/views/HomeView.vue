@@ -45,6 +45,7 @@
 <style scoped lang="scss">
 #homeRouter {
   margin-top: 123px;
+  width: 100%;
 }
 header {
   position: fixed;

@@ -3,16 +3,13 @@ $mainColor1 :   #0A4DFC;
 $mainColor2 :   #5BFFE1;
 $mainColor3 :   #4C2FFF;
 $mainColor4 :   #696969;
-@mixin enTitleFont($fontSize,$color: "black",$isBold : false){
+@mixin enTitleFont($fontSize,$color: black){
   font-family: 'Bebas Neue';
   font-size: #{$fontSize}px;
   color: $color;
-  @if($isBold){
-    font-weight: bold;
-  }
 }
 
-@mixin koFont($fontSize,$color: "black",$isBold : false){
+@mixin koFont($fontSize,$color: black,$isBold : false){
   font-family: 'Noto Sans KR';
   font-size: #{$fontSize}px;
   color: $color;

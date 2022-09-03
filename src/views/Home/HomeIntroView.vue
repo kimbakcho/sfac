@@ -1,121 +1,94 @@
 <template>
   <div>
-    <div id="homeHeader">
-      <img src="big_data_1.png" class="introIcon" id="icon1" alt="icon1">
-
-      <img src="machine_learning_1.png" class="introIcon"  id="icon2" alt="icon2">
-
-      <img src="smartphone_1.png" class="introIcon"  id="icon3" alt="icon3">
-
-      <div class="row justify-center" id="introTitle">
-        <div class="col-8 row justify-center">
-          Trending Solution Smart Factory
-        </div>
+    <div id="homeIntroView">
+      <div id="content">
+        <HomeHeader/>
+        <TopPostPart/>
+        <CommunityPart/>
       </div>
-      <div class="row justify-center" id="introSubTitle2">
-        <div class="col-8 row justify-center">
-          Smart factoy 소통과 혁신 위한 Commutity를 <br>
-          만들어 나가아고자 합니다.
-        </div>
-      </div>
+
     </div>
-    <div class="row no-wrap justify-start" style="column-gap: 20px" >
-      <TopPostCard :post="post.post" :user-info="post.user" class="col-4 topPostCard" v-for="post in posts">
+    <div id="homeBottomView">
+      <img src="homebottomb.png">
+      <div id="bottomTitle">
+        <div>
+          a playground for smart factory developers
+        </div>
+      </div>
+      <div id="myProfile">
+        <div id="btn" class="relative-position" v-ripple>
+          <div>
+            My Profile
+          </div>
 
-      </TopPostCard>
+        </div>
+
+      </div>
+
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type {PostResDto} from "@/Bis/Post/Dto/PostResDto";
-import type {UserInfoResDto} from "@/Bis/User/Dto/UserInfoResDto";
-import TopPostCard from "@/components/Home/TopPostCard.vue"
+import HomeHeader from "@/components/Home/HomeHeader.vue"
+import CommunityPart from "@/components/Home/CommunityPart.vue"
+import TopPostPart from "@/components/Home/TopPostPart.vue"
 
-const posts = [
-  {
-    post: {
-      mainImgUrl: "postexample1.png",
-      title: "반도체 공정에서 스마트 팩토리를 위해 기본 용어를 알아 보자!",
-      writeDate: "2022-08-22",
-      bodyContent: "반도체 제조 공정 에서 사용 되는 기본 적인 용어들이 있습니다.  이 용어들을 알고 있으면 스마트 팩토리 적용에 개발자가 소통에 많이 용이 합니다."
-    } as PostResDto,
-    user: {
-      userImg: "userexample1.png",
-      userNickName: "백구"
-    } as UserInfoResDto
-  },
-  {
-    post: {
-      mainImgUrl: "postexample1.png",
-      title: "반도체 공정에서 스마트 팩토리를 위해 기본 용어를 알아 보자!",
-      writeDate: "2022-08-22",
-      bodyContent: "반도체 제조 공정 에서 사용 되는 기본 적인 용어들이 있습니다.  이 용어들을 알고 있으면 스마트 팩토리 적용에 개발자가 소통에 많이 용이 합니다."
-    } as PostResDto,
-    user: {
-      userImg: "userexample1.png",
-      userNickName: "백구"
-    } as UserInfoResDto
-  },
-  {
-    post: {
-      mainImgUrl: "postexample1.png",
-      title: "반도체 공정에서 스마트 팩토리를 위해 기본 용어를 알아 보자!",
-      writeDate: "2022-08-22",
-      bodyContent: "반도체 제조 공정 에서 사용 되는 기본 적인 용어들이 있습니다.  이 용어들을 알고 있으면 스마트 팩토리 적용에 개발자가 소통에 많이 용이 합니다."
-    } as PostResDto,
-    user: {
-      userImg: "userexample1.png",
-      userNickName: "백구"
-    } as UserInfoResDto
-  },
-]
 </script>
-
 <style scoped lang="scss">
-
-#introSubTitle2 {
-  position: absolute;
-  bottom: 123px;
+#homeIntroView, #homeBottomView {
   width: 100%;
-  font-size: 24px;
-  font-weight: normal;
-  color: $mainColor4;
+  display: flex;
+  justify-content: center;
+  #content {
+    max-width: $rootWidth;
+  }
 }
-
-#introSubTitle1 {
-  position: absolute;
-  top: 243px;
-  width: 100%;
-  @include enTitleFont(45, $mainColor3)
-}
-
-#introTitle{
-  position: absolute;
-  top: 135px;
-  width: 100%;
-  @include enTitleFont(68)
-}
-
-#homeHeader{
-  height: 553px;
-  width: 100%;
+#homeBottomView{
+  margin-top: 50px;
+  height: 678px;
   position: relative;
-  .introIcon {
+  img{
     position: absolute;
-    &#icon1 {
-      top: 24px;
-      left: 197px;
-    }
-    &#icon2 {
-      top: 209px;
-      right: 100px;
-    }
-    &#icon3 {
-      bottom: 123px;
-      left: 100px;
+    top: 0;
+    left: 0;
+    object-fit: fill;
+    height: 678px;
+    width: 100%;
+  }
+  #bottomTitle {
+    position: absolute;
+    @include enTitleFont(64);
+    color: white;
+    top: 131px;
+    left: 0;
+    line-height: 77px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  #myProfile {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    bottom: 228px;
+    #btn{
+      cursor: pointer;
+      width: 281px;
+      height: 76px;
+      border-radius: 18px;
+      background-color: white;
+      color: $mainColor4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      &:hover {
+        color: black;
+      }
     }
   }
-
 }
+
 </style>

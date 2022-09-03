@@ -39,6 +39,20 @@ const props = defineProps<{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  #userInfo {
+    img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+    }
+    div {
+      @include koFont(18, "black", true);
+      margin-left: 16px;
+    }
+    #writeDate {
+      @include koFont(16, "black");
+    }
+  }
 }
 #bodyContent {
   @include koFont(22,$mainColor4,false);
@@ -53,11 +67,17 @@ const props = defineProps<{
 #mainImg {
   border-radius: 10px;
   height: 280px;
+  object-fit: fill;
+  width: 100%;
 }
 
 #root {
-  width: 375px;
-  height: 550px;
+  cursor: pointer;
+  transition: 0.5s;
+  &:hover {
+    padding-bottom: 10px;
+    transform: translateY(-5%);
+  }
 }
 
 

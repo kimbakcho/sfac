@@ -17,7 +17,7 @@ import { RouterView } from 'vue-router'
   height: 100vh;
 }
 #rootRouterView {
-  width: $rootWidth;
+  width: 100%;
   position: relative;
 }
 </style>
