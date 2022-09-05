@@ -6,7 +6,6 @@
         <TopPostPart/>
         <CommunityPart/>
       </div>
-
     </div>
     <div id="homeBottomView">
       <img src="homebottomb.png">
@@ -20,11 +19,8 @@
           <div>
             My Profile
           </div>
-
         </div>
-
       </div>
-
     </div>
   </div>
 </template>

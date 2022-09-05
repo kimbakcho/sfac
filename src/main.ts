@@ -10,6 +10,7 @@ import '@quasar/extras/material-icons/material-icons.css'
 
 // Import Quasar css
 import 'quasar/src/css/index.sass'
+import '@/assets/customFont/css/spac.css'
 
 const app = createApp(App)
 

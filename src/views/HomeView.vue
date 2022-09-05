@@ -3,10 +3,10 @@
       <header>
         <div class="row justify-between items-center" id="headerRoot">
           <div class="col-2">
-            <img src="logo.png">
+            <img src="/logo.png">
           </div>
           <nav class="col-6 row justify-between items-center">
-            <div class="navBtn">
+            <div class="navBtn" :class="{active : isRouter('CommunityHomeView')}" @click="onGoCommunity">
               Community
             </div>
             <div class="navBtn">
@@ -32,14 +32,33 @@
       <router-view id="homeRouter">
 
       </router-view>
-      <footer>
 
-      </footer>
+      <Footer>
+
+      </Footer>
+
     </main>
 </template>
 
 <script setup lang="ts">
+import Footer from "@/components/Home/Footer.vue"
+import router from "@/router";
+import {computed} from "vue";
+function onGoCommunity(e: Event) {
+  console.log(e.currentTarget)
+  router.push({
+    name: "CommunityMainHomeView"
+  })
+}
 
+function isRouter(name: string) {
+  const find = router.currentRoute.value.matched.find(value => (value.name==name))
+  if(find) {
+    return true;
+  }else {
+    return false;
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -71,7 +90,8 @@ nav{
     &:hover{
       color: black;
     }
-    &.isActive{
+    &.active{
+      color: black;
       border-bottom: solid 2px black;
     }
   }
