@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'spac';
-  src: url('../font/spac.eot?88206668');
-  src: url('../font/spac.eot?88206668#iefix') format('embedded-opentype'),
-       url('../font/spac.woff2?88206668') format('woff2'),
-       url('../font/spac.woff?88206668') format('woff'),
-       url('../font/spac.ttf?88206668') format('truetype'),
-       url('../font/spac.svg?88206668#spac') format('svg');
+  src: url('../font/spac.eot?58744135');
+  src: url('../font/spac.eot?58744135#iefix') format('embedded-opentype'),
+       url('../font/spac.woff2?58744135') format('woff2'),
+       url('../font/spac.woff?58744135') format('woff'),
+       url('../font/spac.ttf?58744135') format('truetype'),
+       url('../font/spac.svg?58744135#spac') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'spac';
-    src: url('../font/spac.svg?88206668#spac') format('svg');
+    src: url('../font/spac.svg?58744135#spac') format('svg');
   }
 }
 */
@@ -55,9 +55,8 @@
 }
 
 .spac-googleicon:before { content: '\e800'; } /* '' */
-.spac-edit:before { content: '\e801'; } /* '' */
+.spac-heart-solid:before { content: '\e801'; } /* '' */
 .spac-navericon:before { content: '\e802'; } /* '' */
 .spac-kakaotalk:before { content: '\e803'; } /* '' */
-.spac-pencil-squared:before { content: '\f14b'; } /* '' */
-.spac-thumbs-up-alt:before { content: '\f164'; } /* '' */
-.spac-thumbs-down-alt:before { content: '\f165'; } /* '' */
+.spac-reply:before { content: '\e805'; } /* '' */
+.spac-eye-solid:before { content: '\e806'; } /* '' */

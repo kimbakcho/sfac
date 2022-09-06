@@ -1,8 +1,7 @@
 
 .spac-googleicon:before { content: '\e800'; } /* '' */
-.spac-edit:before { content: '\e801'; } /* '' */
+.spac-heart-solid:before { content: '\e801'; } /* '' */
 .spac-navericon:before { content: '\e802'; } /* '' */
 .spac-kakaotalk:before { content: '\e803'; } /* '' */
-.spac-pencil-squared:before { content: '\f14b'; } /* '' */
-.spac-thumbs-up-alt:before { content: '\f164'; } /* '' */
-.spac-thumbs-down-alt:before { content: '\f165'; } /* '' */
+.spac-reply:before { content: '\e805'; } /* '' */
+.spac-eye-solid:before { content: '\e806'; } /* '' */

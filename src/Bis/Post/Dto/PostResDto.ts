@@ -1,3 +1,4 @@
+import type {UserInfoResDto} from "@/Bis/User/Dto/UserInfoResDto";
 
 
 export interface PostResDto {
@@ -7,4 +8,6 @@ export interface PostResDto {
     writeDate: string;
     replyCount: number;
     viewCount: number;
+    likeCount: number;
+    writeUser: UserInfoResDto
 }

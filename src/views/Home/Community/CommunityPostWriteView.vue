@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="rootView">
-      <div id="content">
+      <form id="content">
         <div id="titleBox">
           <div>
             글작성 하기
@@ -28,16 +28,44 @@
               제목
             </label>
           </div>
-
           <input type="text" id="title" placeholder="제목을 입력해주세요">
-
         </div>
-      </div>
+        <div id="titleImgArea">
+          <div id="titleImage">
+            <span>
+              메인 이미지
+            </span>
+            <span>
+              글 메인에 등록할 이미지 입니다.
+            </span>
+          </div>
+          <label for="mainImage" id="mainImageLabel">
+            <img src="/image_file_add.png">
+          </label>
+          <input type="file" id="mainImage" hidden>
+        </div>
+        <div id="postContentArea">
+          <div id="postContentTitle">
+            상세 정보
+          </div>
+          <textarea id="postContentValue">
+
+          </textarea>
+        </div>
+        <button type="submit" @click="onWrite" id="postWriteBtn" class="relative-position" v-ripple>
+          작성 하기
+        </button>
+      </form>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+
+function onWrite(e: Event){
+  e.preventDefault()
+
+}
 
 </script>
 
@@ -48,6 +76,27 @@
   justify-content: center;
   #content{
     width: $rootWidth;
+    #postWriteBtn{
+      margin-top: 16px;
+      width: 100%;
+      height: 56px;
+      background: $mainColor1;
+      border-radius: 10px;
+      border: none;
+      @include koFont(22,white)
+    }
+    #postContentArea {
+      margin-top: 33px;
+      #postContentTitle {
+        @include koFont(22)
+      }
+      #postContentValue{
+        margin-top: 9px;
+        width: 100%;
+        height: 482px;
+      }
+    }
+
     #titleInputArea {
       margin-top: 26px;
       @include koFont(22);
@@ -99,6 +148,33 @@
       @include koFont(30);
       line-height: 43px;
       margin-top: 9px;
+    }
+    #titleImgArea {
+      margin-top: 28px;
+      #titleImage{
+        span:nth-child(1){
+          @include koFont(22)
+        }
+        span:nth-child(2){
+          margin-left: 16px;
+          @include koFont(15,$mainColor4)
+        }
+      }
+      #mainImageLabel {
+        margin-top: 25px;
+        background-color: #D9D9D9;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 275px;
+        height: 119px;
+        opacity: 0.5;
+        cursor: pointer;
+        &:hover{
+          opacity: 1;
+        }
+      }
     }
   }
 }
