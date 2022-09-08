@@ -32,8 +32,11 @@ const router = createRouter({
                         path: "modify",
                         name: "CommunityPostModifyView",
                         component: () => import("../views/Home/Community/CommunityPostModifyView.vue")
-                    }
-                    ]
+                    }, {
+                        path: "post/:id",
+                        name: "CommunityPost",
+                        component: () => import("../views/Home/Community/CommunityPostView.vue")
+                    }]
                 }
             ]
         },
