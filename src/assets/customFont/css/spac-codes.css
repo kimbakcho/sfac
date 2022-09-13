@@ -3,5 +3,7 @@
 .spac-heart-solid:before { content: '\e801'; } /* '' */
 .spac-navericon:before { content: '\e802'; } /* '' */
 .spac-kakaotalk:before { content: '\e803'; } /* '' */
+.spac-arrowup:before { content: '\e804'; } /* '' */
 .spac-reply:before { content: '\e805'; } /* '' */
 .spac-eye-solid:before { content: '\e806'; } /* '' */
+.spac-arrowdown:before { content: '\e807'; } /* '' */

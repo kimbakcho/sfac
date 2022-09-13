@@ -12,11 +12,9 @@
           댓글 쓰기
         </button>
       </div>
-      <div>
+      <ReplyViews replyId="3" :depth="0" id="replyViews">
 
-
-      </div>
-
+      </ReplyViews>
     </form>
 
   </div>
@@ -25,6 +23,7 @@
 <script setup lang="ts">
 import {defineProps, h, onMounted, ref, render} from "vue";
 import type {UserInfoResDto} from "@/Bis/User/Dto/UserInfoResDto";
+import ReplyViews from "@/components/Reply/ReplyViews.vue"
 
 const props = defineProps(['id'])
 
@@ -40,7 +39,7 @@ const userInfo = ref<UserInfoResDto>({
   width: 100%;
   padding: 16px;
   border-radius: 10px;
-  border: 1px solid $mainColor4;
+  //border: 1px solid $mainColor4;
   #actions{
     margin-top: 20px;
     display: flex;
@@ -72,5 +71,8 @@ const userInfo = ref<UserInfoResDto>({
       border: 1px solid $mainColor4;
     }
   }
+}
+#replyViews {
+  padding: 16px;
 }
 </style>

@@ -89,6 +89,34 @@
       "search": [
         "eye-solid"
       ]
+    },
+    {
+      "uid": "301409addb345ab83675826bf7258fe4",
+      "css": "arrowup",
+      "code": 59396,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M1412 1000L800 381.9 188 1000 0 809.7 800 0 1600 809.7 1412 1000Z",
+        "width": 1600
+      },
+      "search": [
+        "arrowup"
+      ]
+    },
+    {
+      "uid": "d7f8f008feb6073039cb6d3cea6e6ed9",
+      "css": "arrowdown",
+      "code": 59399,
+      "src": "custom_icons",
+      "selected": true,
+      "svg": {
+        "path": "M188 0L800 618.1 1412 0 1600 190.3 800 1000 0 190.3 188 0Z",
+        "width": 1600
+      },
+      "search": [
+        "arrowdown"
+      ]
     }
   ]
 }
