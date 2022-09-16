@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { Quasar } from 'quasar'
+import {QDialog, Quasar} from 'quasar'
 
 import { createPinia } from 'pinia'
 import quasarLang from 'quasar/lang/ko-KR'
@@ -12,10 +12,34 @@ import '@quasar/extras/material-icons/material-icons.css'
 import 'quasar/src/css/index.sass'
 import '@/assets/customFont/css/spac.css'
 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+    apiKey: "AIzaSyDn31e32io1TCqSeFGGhZojn0X_fpTK0EQ",
+    authDomain: "sfac-81ca6.firebaseapp.com",
+    projectId: "sfac-81ca6",
+    storageBucket: "sfac-81ca6.appspot.com",
+    messagingSenderId: "747613190612",
+    appId: "1:747613190612:web:e7125e9a5dce8048b3fe41",
+    measurementId: "G-67GD8S93C7"
+};
+
+// Initialize Firebase
+const firebaseApp = initializeApp(firebaseConfig);
+const analytics = getAnalytics(firebaseApp);
+
 const app = createApp(App)
 
 app.use(Quasar, {
-    plugins: {}, // import Quasar plugins and add here
+    plugins: {
+        QDialog
+    }, // import Quasar plugins and add here
     lang: quasarLang,
 })
 

@@ -23,7 +23,7 @@
             <div id="signInBtn">
               Sign In
             </div>
-            <div id="signUpBtn" class="relative-position text-white" v-ripple>
+            <div id="signUpBtn" class="relative-position text-white" v-ripple @click="goSignUp">
               Sing Up
             </div>
           </div>
@@ -44,6 +44,13 @@
 import Footer from "@/components/Home/Footer.vue"
 import router from "@/router";
 import {computed} from "vue";
+
+function goSignUp(){
+  router.push({
+    name: "SignUpView"
+  })
+}
+
 function onGoCommunity(e: Event) {
   console.log(e.currentTarget)
   router.push({
