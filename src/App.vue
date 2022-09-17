@@ -1,7 +1,4 @@
-<script setup lang="ts">
-import { RouterView } from 'vue-router'
 
-</script>
 
 <template>
   <div id="appRoot">
@@ -10,6 +7,9 @@ import { RouterView } from 'vue-router'
 
 </template>
 
+<script setup lang="ts">
+
+</script>
 <style scoped lang="scss">
 #appRoot {
   display: flex;

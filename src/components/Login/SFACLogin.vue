@@ -7,7 +7,7 @@
         </label>
       </div>
       <div>
-        <input type="email" id="email" />
+        <input type="email" id="email" v-model="id" />
       </div>
       <div style="margin-top: 16px">
         <label for="password">
@@ -15,7 +15,7 @@
         </label>
       </div>
       <div>
-        <input type="password" id="password" />
+        <input type="password" id="password"  v-model="pw"/>
       </div>
 
       <div id="findpw" >
@@ -24,7 +24,7 @@
         </div>
 
       </div>
-      <button type="submit" @click="onSubmit" v-ripple class="relative-position">
+      <button type="submit" @click="onSubmit" v-ripple class="relative-position" >
         로그인
       </button>
     </form>
@@ -33,9 +33,23 @@
 </template>
 
 <script setup lang="ts">
-function onSubmit(e: Event){
+import UserUseCase from "@/Bis/User/Domain/UserUseCase";
+import {ref} from "vue";
+import router from "@/router";
+
+const id = ref("")
+const pw = ref("")
+
+async function onSubmit(e: Event){
   e.preventDefault();
-  console.log("로그인")
+  let userUseCase = UserUseCase.getInstance();
+  const result = await userUseCase.login(id.value,pw.value);
+  if(result){
+    await router.push({
+      name: "homeIntroView"
+    })
+  }
+
 }
 </script>
 

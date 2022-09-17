@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import {QDialog, Quasar} from 'quasar'
+import {Dialog, Loading, Quasar} from 'quasar'
 
 import { createPinia } from 'pinia'
 import quasarLang from 'quasar/lang/ko-KR'
@@ -15,6 +15,9 @@ import '@/assets/customFont/css/spac.css'
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import axios from "axios";
+import UserUseCase from "@/Bis/User/Domain/UserUseCase";
+import {userStore} from "@/stores/store";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -34,11 +37,13 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(firebaseApp);
 
+axios.defaults.baseURL = import.meta.env.VITE_BASE_BACK_URL;
+
 const app = createApp(App)
 
 app.use(Quasar, {
     plugins: {
-        QDialog
+        Dialog, Loading
     }, // import Quasar plugins and add here
     lang: quasarLang,
 })
@@ -47,4 +52,28 @@ app.use(Quasar, {
 app.use(createPinia())
 app.use(router)
 
-app.mount('#app')
+const refresh = localStorage.getItem("refresh")
+if(refresh){
+    try{
+        let userUseCase = UserUseCase.getInstance();
+        const verifyResult = await userUseCase.verifyToken(refresh)
+        if(verifyResult){
+            let userStore1 = userStore();
+            const resultToken = await userUseCase.getTokenFromRefreshToken(refresh)
+            localStorage.setItem("access",resultToken.access)
+            localStorage.setItem("refresh",resultToken.refresh)
+            axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("access")}`;
+            userStore1.setUserInfo(await userUseCase.getUserInfo())
+            userStore1.setIsLogin(true)
+            userUseCase.refreshTokenSchStart()
+        }
+    }catch (e) {
+
+    } finally {
+        app.mount('#app')
+    }
+
+}else {
+    app.mount('#app')
+}
+

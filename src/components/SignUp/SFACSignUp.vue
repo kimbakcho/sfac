@@ -10,7 +10,7 @@
         </label>
       </div>
       <div>
-        <input type="email" id="email" v-model="email" @input="onInputEmail" />
+        <input type="email" id="email" v-model="signUpReqDto.email" @input="onInputEmail" />
       </div>
       <div style="margin-top: 16px">
         <label for="password">
@@ -18,7 +18,7 @@
         </label>
       </div>
       <div>
-        <input type="password" id="password" />
+        <input type="password" id="password" v-model="signUpReqDto.pw" />
       </div>
 
       <div style="margin-top: 16px">
@@ -27,7 +27,7 @@
         </label>
       </div>
       <div>
-        <input type="text" id="nickName" />
+        <input type="text" id="nickName" v-model="signUpReqDto.nickName"/>
       </div>
       <div id="info">
         <div id="serviceInfo">
@@ -48,20 +48,32 @@
 <script setup lang="ts">
 import { createAvatar } from '@dicebear/avatars';
 import * as style from '@dicebear/avatars-bottts-sprites';
-import {onMounted, ref} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import { getStorage, connectStorageEmulator, ref as fRef, uploadString, getDownloadURL  } from "firebase/storage";
 import { v4 as uuidv4 } from 'uuid';
 import {useQuasar} from "quasar";
 import { getApp } from "firebase/app";
+import UserUseCase from "@/Bis/User/Domain/UserUseCase";
+import type {SignUpReqDto} from "@/Bis/User/Dto/SignUpReqDto";
+import {userStore} from "@/stores/store";
+import router from "@/router";
 
-const email = ref("")
+
 
 const $q= useQuasar()
+
+const signUpReqDto = reactive<SignUpReqDto>({
+  email: "",
+  nickName: "",
+  profileImage: "",
+  pw: ""
+})
+
+const userUseCase = UserUseCase.getInstance();
 
 async function onSubmit(e: Event){
   e.preventDefault()
   let storage = getStorage();
-  console.log(import.meta.env.MODE)
   if(import.meta.env.MODE == 'development'){
     connectStorageEmulator(storage, "localhost", 9199);
   }else {
@@ -70,8 +82,36 @@ async function onSubmit(e: Event){
   }
   const storageRef = fRef(storage, `/profileImage/${uuidv4()}.svg`);
   try{
+    $q.loading.show({
+      message: "회원 가입중"
+    })
     const result = await uploadString(storageRef,avatarImg.value,'data_url')
     const downloadUrl = await getDownloadURL(result.ref)
+    try{
+      signUpReqDto.profileImage = downloadUrl
+      let signResDto = await userUseCase.signUp(signUpReqDto)
+      $q.loading.hide();
+      let userStore1 = userStore();
+      userStore1.setUserInfo({
+        nickName: signResDto.nickName,
+        user: {
+          id: signResDto.id,
+          email: signResDto.userEmail,
+        },
+        profileImgUrl: signResDto.profileImage
+      })
+      userStore1.setIsLogin(true)
+      userUseCase.setToken(signResDto.access,signResDto.refresh)
+      userUseCase.refreshTokenSchStart();
+      await router.push({
+        name: "homeIntroView"
+      })
+    } catch (e: any) {
+      $q.loading.hide();
+      $q.dialog({
+        message: e.response.data.errorMessage
+      })
+    }
   }catch (e) {
     console.log(e)
     $q.dialog({
@@ -79,8 +119,6 @@ async function onSubmit(e: Event){
     })
     return ;
   }
-
-  console.log("회원 가입")
 }
 let avatarImg = ref("")
 
@@ -97,7 +135,7 @@ onMounted(()=>{
 
 function onInputEmail(){
   avatarImg.value = createAvatar(style, {
-    seed: email.value,
+    seed: signUpReqDto.email,
     radius: 50,
     dataUri: true,
     size: 48

@@ -35,7 +35,7 @@
           <div class="col-3" id="signUpText1" style="">
             아직 회원이 아니신가요 ?
           </div>
-          <div class="col-1" id="signUpText2">
+          <div class="col-1" id="signUpText2" @click="onSignUp">
             회원 가입
           </div>
         </div>
@@ -51,6 +51,13 @@
 import LoginHeader from "@/components/Login/LoginHeader.vue"
 import SnsLogin from "@/components/Login/SnsLogin.vue"
 import SFACLogin from "@/components/Login/SFACLogin.vue"
+import router from "@/router";
+
+function onSignUp(){
+  router.push({
+    name: "SignUpView"
+  })
+}
 </script>
 
 <style scoped lang="scss">

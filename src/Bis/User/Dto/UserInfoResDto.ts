@@ -1,4 +1,8 @@
 export interface UserInfoResDto {
-    userImg?: string,
-    userNickName: string,
+    profileImgUrl: string,
+    nickName: string,
+    user: {
+        id: number,
+        email: string
+    }
 }

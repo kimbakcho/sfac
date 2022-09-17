@@ -3,7 +3,7 @@
       <header>
         <div class="row justify-between items-center" id="headerRoot">
           <div class="col-2">
-            <img src="/logo.png">
+            <img src="/logo.png" class="relative-position" v-ripple>
           </div>
           <nav class="col-6 row justify-between items-center">
             <div class="navBtn" :class="{active : isRouter('CommunityHomeView')}" @click="onGoCommunity">
@@ -20,11 +20,23 @@
             </div>
           </nav>
           <div class="col-3 row items-center justify-end" id="loginButtons">
-            <div id="signInBtn">
-              Sign In
+            <div v-if="isLogin()" class="row items-center justify-end" id="userInfo">
+              <div id="imgRoot" class="relative-position" v-ripple style="margin-right: 16px">
+                <img :src="userStore1.userInfo.profileImgUrl" >
+              </div>
+
+              <div id="logOutBtn"  @click="onLogout">
+                logout
+              </div>
             </div>
-            <div id="signUpBtn" class="relative-position text-white" v-ripple @click="goSignUp">
-              Sing Up
+
+            <div v-else class="row items-center justify-end" >
+              <div id="signInBtn" @click="onSignIn">
+                Sign In
+              </div>
+              <div id="signUpBtn" class="relative-position text-white" v-ripple @click="goSignUp">
+                Sing Up
+              </div>
             </div>
           </div>
         </div>
@@ -44,6 +56,19 @@
 import Footer from "@/components/Home/Footer.vue"
 import router from "@/router";
 import {computed} from "vue";
+import {userStore} from "@/stores/store";
+import UserUseCase from "@/Bis/User/Domain/UserUseCase";
+const userStore1 = userStore();
+function onSignIn(){
+  router.push({
+    name: "login"
+  })
+}
+
+function onLogout() {
+  let userUseCase = UserUseCase.getInstance();
+  userUseCase.logout()
+}
 
 function goSignUp(){
   router.push({
@@ -56,6 +81,12 @@ function onGoCommunity(e: Event) {
   router.push({
     name: "CommunityMainHomeView"
   })
+}
+
+
+
+function isLogin(){
+  return userStore1.isLogin
 }
 
 function isRouter(name: string) {
@@ -106,6 +137,14 @@ nav{
 #loginButtons{
   font-weight: bold;
   font-size: 19px;
+  #userInfo {
+    #imgRoot {
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+  }
   #signInBtn{
     margin-right: 19px;
     cursor: pointer;
@@ -114,7 +153,7 @@ nav{
       color: black;
     }
   }
-  #signUpBtn{
+  #signUpBtn, #logOutBtn{
     display: flex;
     align-items: center;
     background-color: $mainColor3;
