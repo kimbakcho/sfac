@@ -6,6 +6,7 @@ import {
     Dialog, Loading
 } from 'quasar'
 import type {UserInfoResDto} from "@/Bis/User/Dto/UserInfoResDto";
+import type {UserInfoReqDto} from "@/Bis/User/Dto/UserInfoReqDto";
 
 export default class UserUseCase {
     private static instance: UserUseCase;
@@ -32,6 +33,11 @@ export default class UserUseCase {
     }
     async getUserInfo(): Promise<UserInfoResDto>{
         let axiosResponse = await axios.get("/user/info/");
+        return axiosResponse.data
+    }
+
+    async userInfoUpdate(userInfoReqDto: UserInfoReqDto): Promise<UserInfoResDto> {
+        let axiosResponse = await axios.post('/user/info/',userInfoReqDto);
         return axiosResponse.data
     }
 

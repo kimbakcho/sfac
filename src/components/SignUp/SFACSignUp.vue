@@ -57,6 +57,7 @@ import UserUseCase from "@/Bis/User/Domain/UserUseCase";
 import type {SignUpReqDto} from "@/Bis/User/Dto/SignUpReqDto";
 import {userStore} from "@/stores/store";
 import router from "@/router";
+import FireStorageUseCase from "@/Bis/FireStore/FireStorageUseCase";
 
 
 
@@ -73,20 +74,14 @@ const userUseCase = UserUseCase.getInstance();
 
 async function onSubmit(e: Event){
   e.preventDefault()
-  let storage = getStorage();
-  if(import.meta.env.MODE == 'development'){
-    connectStorageEmulator(storage, "localhost", 9199);
-  }else {
-    const firebaseApp = getApp();
-    storage = getStorage(firebaseApp, "gs://sfac-81ca6.appspot.com/");
-  }
-  const storageRef = fRef(storage, `/profileImage/${uuidv4()}.svg`);
+
+  let fireStorage = FireStorageUseCase.getInstance();
   try{
     $q.loading.show({
       message: "회원 가입중"
     })
-    const result = await uploadString(storageRef,avatarImg.value,'data_url')
-    const downloadUrl = await getDownloadURL(result.ref)
+
+    const downloadUrl = await fireStorage.uploadUserProfileImage(avatarImg.value)
     try{
       signUpReqDto.profileImage = downloadUrl
       let signResDto = await userUseCase.signUp(signUpReqDto)

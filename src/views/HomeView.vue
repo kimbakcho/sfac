@@ -21,8 +21,11 @@
           </nav>
           <div class="col-3 row items-center justify-end" id="loginButtons">
             <div v-if="isLogin()" class="row items-center justify-end" id="userInfo">
-              <div id="imgRoot" class="relative-position" v-ripple style="margin-right: 16px">
+              <div id="imgRoot" class="relative-position" v-ripple style="margin-right: 16px" @click="goUserInfo">
                 <img :src="userStore1.userInfo.profileImgUrl" >
+                <div>
+
+                </div>
               </div>
 
               <div id="logOutBtn"  @click="onLogout">
@@ -59,6 +62,13 @@ import {computed} from "vue";
 import {userStore} from "@/stores/store";
 import UserUseCase from "@/Bis/User/Domain/UserUseCase";
 const userStore1 = userStore();
+
+function goUserInfo() {
+  router.push({
+    name: "userInfo"
+  })
+}
+
 function onSignIn(){
   router.push({
     name: "login"
