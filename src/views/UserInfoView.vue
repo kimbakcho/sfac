@@ -96,10 +96,9 @@ async function onUpdateUserInfo() {
   }catch (e: any) {
     $q.loading.hide();
     $q.dialog({
-      message: e.response.data.message
+      message: e.response.data.errorMessage
     })
   }
-
 }
 
 async function onProfileChange(){
