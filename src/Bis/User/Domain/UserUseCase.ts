@@ -43,11 +43,33 @@ export default class UserUseCase {
 
     setToken(access: string, refresh: string) {
         localStorage.setItem("access", access)
+        axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("access")}`;
         localStorage.setItem("refresh", refresh)
     }
 
-    async login(id: string,pw: string): Promise<boolean>{
+    async changeUserPw(currentPw: string,newPw: string){
+        try{
+            Loading.show({
+                message: "변경 하는 중"
+            })
+            const formData = new FormData();
+            formData.append("currentPw",currentPw);
+            formData.append("newPw",newPw);
+            await axios.post("/user/pwChange/",formData)
+            Loading.hide()
+            Dialog.create({
+                message: "Pw 변경을 완료 하였습니다."
+            })
+        }catch (e: any) {
+            Loading.hide()
+            Dialog.create({
+                message: e.response.data.errorMessage
+            })
+        }
 
+    }
+
+    async login(id: string,pw: string): Promise<boolean>{
         try{
             Loading.show({
                 message: "로그인 중"
@@ -61,6 +83,7 @@ export default class UserUseCase {
                     "Content-Type": "application/json"
                 }
             });
+
             let data = axiosResponse.data;
             this.setToken(data.access,data.refresh)
             axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("access")}`;
@@ -72,7 +95,7 @@ export default class UserUseCase {
             return true;
         }catch (e: any) {
             Dialog.create({
-                message: e.response.data.detail
+                message: e.response.data.errorMessage
             })
             return false;
         } finally {

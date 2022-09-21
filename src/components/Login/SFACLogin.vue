@@ -1,22 +1,11 @@
 <template>
   <div>
     <form>
-      <div>
-        <label for="email">
-          아이디
-        </label>
-      </div>
-      <div>
-        <input type="email" id="email" v-model="id" />
-      </div>
-      <div style="margin-top: 16px">
-        <label for="password">
-          비밀번호
-        </label>
-      </div>
-      <div>
-        <input type="password" id="password"  v-model="pw"/>
-      </div>
+      <BTextInput title="아이디" type="email" v-model="id">
+      </BTextInput>
+      <BTextInput style="margin-top: 16px" title="비밀번호" v-model="pw" type="password">
+
+      </BTextInput>
 
       <div id="findpw" >
         <div>
@@ -34,6 +23,7 @@
 
 <script setup lang="ts">
 import UserUseCase from "@/Bis/User/Domain/UserUseCase";
+import BTextInput from "@/components/Etc/BTextInput.vue"
 import {ref} from "vue";
 import router from "@/router";
 
@@ -54,17 +44,6 @@ async function onSubmit(e: Event){
 </script>
 
 <style scoped lang="scss">
-label {
-  @include koFont(19)
-}
-input {
-  border: 1px solid $mainColor4;
-  border-radius: 10px;
-  height: 64px;
-  width: 100%;
-  @include koFont(19);
-  padding: 0px 16px;
-}
 #findpw {
   display: flex;
   justify-content: flex-end;

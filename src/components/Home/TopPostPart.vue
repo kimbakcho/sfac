@@ -21,8 +21,9 @@ const posts = [
       viewCount: 0
     } as PostResDto,
     user: {
-      userImg: "userexample1.png",
-      userNickName: "백구"
+      profileImgUrl: "userexample1.png",
+      nickName: "백구",
+      id: 3
     } as UserInfoResDto
   },
   {
@@ -35,8 +36,9 @@ const posts = [
       viewCount: 0
     } as PostResDto,
     user: {
-      userImg: "userexample1.png",
-      userNickName: "백구"
+      profileImgUrl: "userexample1.png",
+      nickName: "백구",
+      id: 3
     } as UserInfoResDto
   },
   {
@@ -49,8 +51,9 @@ const posts = [
       viewCount: 0
     } as PostResDto,
     user: {
-      userImg: "userexample1.png",
-      userNickName: "백구"
+      profileImgUrl: "userexample1.png",
+      nickName: "백구",
+      id: 3
     } as UserInfoResDto
   },
 ]

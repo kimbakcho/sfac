@@ -53,6 +53,7 @@ import SnsLogin from "@/components/Login/SnsLogin.vue"
 import SFACLogin from "@/components/Login/SFACLogin.vue"
 import router from "@/router";
 
+
 function onSignUp(){
   router.push({
     name: "SignUpView"

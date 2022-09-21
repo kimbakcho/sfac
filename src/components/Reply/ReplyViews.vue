@@ -136,8 +136,9 @@ onMounted(()=>{
       uuid: "tet4",
       writeTime: "2일전",
       user: {
-        userImg: "/cheese_1.png",
-        userNickName: "하얀3"
+        profileImgUrl: "/cheese_1.png",
+        nickName: "하얀3",
+        id: 3
       } as UserInfoResDto,
       replyContent: "오호 OPC 의 클래군요. \n" +
           "재미 있어요 ^^ 좋은 정보 감사 해요 ",
@@ -148,8 +149,9 @@ onMounted(()=>{
           uuid: "tet5",
           writeTime: "1일전",
           user: {
-            userImg: "/cheese_1.png",
-            userNickName: "하얀4"
+            profileImgUrl: "/cheese_1.png",
+            nickName: "하얀4",
+            id: 3
           } as UserInfoResDto,
           replyContent: "오호 OPC 의 클래식의 시작은 여기서 부터 \n" +
               "재미 있어요 ^^ 좋은 정보 감사 해요 ",
@@ -161,8 +163,9 @@ onMounted(()=>{
           uuid: "tet6",
           writeTime: "2일전",
           user: {
-            userImg: "/cheese_1.png",
-            userNickName: "하얀3"
+            nickName: "하얀3",
+            profileImgUrl: "/cheese_1.png",
+            id: 3
           } as UserInfoResDto,
           replyContent: "오호 OPC 의 클래식의 32 였군요. \n" +
               "재미 있어요 ^^ 좋은 정보 감사 해요 ",

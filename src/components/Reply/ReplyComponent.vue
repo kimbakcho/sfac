@@ -28,8 +28,9 @@ import ReplyViews from "@/components/Reply/ReplyViews.vue"
 const props = defineProps(['id'])
 
 const userInfo = ref<UserInfoResDto>({
-  userImg: "/cheese_1.png",
-  userNickName: "백구"
+  profileImgUrl: "/cheese_1.png",
+  nickName: "백구",
+  id: 3
 })
 
 </script>

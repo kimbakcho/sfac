@@ -4,31 +4,16 @@
       <div style="display: flex;justify-content: center">
         <img :src="avatarImg">
       </div>
-      <div>
-        <label for="email">
-          E-mail
-        </label>
-      </div>
-      <div>
-        <input type="email" id="email" v-model="signUpReqDto.email" @input="onInputEmail" />
-      </div>
-      <div style="margin-top: 16px">
-        <label for="password">
-          비밀번호
-        </label>
-      </div>
-      <div>
-        <input type="password" id="password" v-model="signUpReqDto.pw" />
-      </div>
+      <BTextInput title="E-mail" type="email" v-model="signUpReqDto.email" @input="onInputEmail">
 
-      <div style="margin-top: 16px">
-        <label for="nickName">
-          닉네임
-        </label>
-      </div>
-      <div>
-        <input type="text" id="nickName" v-model="signUpReqDto.nickName"/>
-      </div>
+      </BTextInput>
+      <BTextInput style="margin-top: 16px" title="비밀번호" type="password" v-model="signUpReqDto.pw">
+
+      </BTextInput>
+
+      <BTextInput style="margin-top: 16px" title="닉네임" v-model="signUpReqDto.nickName">
+
+      </BTextInput>
       <div id="info">
         <div id="serviceInfo">
           서비스 이용 정보
@@ -58,7 +43,7 @@ import type {SignUpReqDto} from "@/Bis/User/Dto/SignUpReqDto";
 import {userStore} from "@/stores/store";
 import router from "@/router";
 import FireStorageUseCase from "@/Bis/FireStore/FireStorageUseCase";
-
+import BTextInput from "@/components/Etc/BTextInput.vue"
 
 
 const $q= useQuasar()
@@ -87,16 +72,10 @@ async function onSubmit(e: Event){
       let signResDto = await userUseCase.signUp(signUpReqDto)
       $q.loading.hide();
       let userStore1 = userStore();
-      userStore1.setUserInfo({
-        nickName: signResDto.nickName,
-        user: {
-          id: signResDto.id,
-          email: signResDto.userEmail,
-        },
-        profileImgUrl: signResDto.profileImage
-      })
+      userStore1.setUserInfo(signResDto.userInfo)
       userStore1.setIsLogin(true)
       userUseCase.setToken(signResDto.access,signResDto.refresh)
+
       userUseCase.refreshTokenSchStart();
       await router.push({
         name: "homeIntroView"

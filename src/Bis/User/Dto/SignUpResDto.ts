@@ -1,8 +1,7 @@
+import type {UserInfoResDto} from "@/Bis/User/Dto/UserInfoResDto";
+
 export interface SignUpResDto {
-    id: number,
-    nickName: string;
-    userEmail: string;
-    profileImage: string;
+    userInfo: UserInfoResDto,
     access: string;
     refresh: string;
 }

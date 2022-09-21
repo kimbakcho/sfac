@@ -12,13 +12,11 @@
           <div class="row justify-center" style="margin-top: 30px">
             <div class="col-8" id="userInfoDivide">
               <div style="border-bottom: 1px solid black; flex-grow: 1">
-
               </div>
               <div style="margin: 0px 15px">
                 회원 가입에 필요한 정보를 수정 해주세요.
               </div>
               <div style="border-bottom: 1px solid black;flex-grow: 1">
-
               </div>
             </div>
           </div>
@@ -35,12 +33,14 @@
 
               <div class="row justify-center">
                 <div class="col-8">
-                  <div style="margin-top: 11px" id="userInfo">
-                    <div>
-                      닉네임
-                    </div>
-                    <input type="text" id="nickName" v-model="nickName">
-                  </div>
+                  <BTextInput style="margin-top: 11px" type="text" title="닉네임" v-model="nickName">
+
+                  </BTextInput>
+                </div>
+              </div>
+              <div class="row justify-center">
+                <div class="col-8 relative-position" id="pwChangeBtn" v-ripple @click="gotoPWChange">
+                  패스워드 변경 하기
                 </div>
               </div>
             </div>
@@ -64,6 +64,7 @@ import {useQuasar} from "quasar";
 import {onMounted, ref} from "vue";
 import UserUseCase from "@/Bis/User/Domain/UserUseCase";
 import router from "@/router";
+import BTextInput from "@/components/Etc/BTextInput.vue"
 
 let userStore1 = userStore();
 
@@ -79,6 +80,11 @@ function getUserImg(){
   return userStore1.userInfo!.profileImgUrl
 }
 
+async function gotoPWChange() {
+  await router.push({
+    name:"PWChangeView"
+  })
+}
 
 async function onUpdateUserInfo() {
   try{
@@ -87,7 +93,8 @@ async function onUpdateUserInfo() {
     })
     const userUseCase = UserUseCase.getInstance();
     userStore1.setUserInfo(await userUseCase.userInfoUpdate({
-      nickName: nickName.value
+      nickName: nickName.value,
+      profileImgUrl: userStore1.userInfo!.profileImgUrl
     }))
     $q.loading.hide();
     await router.push({
@@ -124,6 +131,19 @@ async function onProfileChange(){
     width: $rootWidth;
     display: flex;
     flex-direction: column;
+  }
+  #pwChangeBtn {
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: $mainColor3;
+    margin-top: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    font-size: 19px;
+    cursor: pointer;
   }
   header{
     margin-top: 113px;
@@ -176,7 +196,7 @@ async function onProfileChange(){
     width: 100%;
     margin-bottom: 74px;
     button {
-      background-color: $mainColor3;
+      background-color: $mainColor1;
       height: 55px;
       display: flex;
       align-items: center;

@@ -53,7 +53,8 @@ async function onChangeProfileImage (){
       const imageUrl = await FireStorageUseCase.getInstance().uploadUserProfileImage(changeFile.value!);
       const userUseCase = UserUseCase.getInstance();
       userStore1.setUserInfo(await userUseCase.userInfoUpdate({
-        profileImgUrl: imageUrl
+        profileImgUrl: imageUrl,
+        nickName: userStore1.userInfo!.nickName
       }))
 
       $q.loading.hide();
