@@ -7,7 +7,7 @@
 
       </BTextInput>
 
-      <div id="findpw" >
+      <div id="findpw" @click="gotoPWFind">
         <div>
           비밀번호 찾기
         </div>
@@ -29,6 +29,12 @@ import router from "@/router";
 
 const id = ref("")
 const pw = ref("")
+
+function gotoPWFind() {
+  router.push({
+    name: "PwFindView"
+  })
+}
 
 async function onSubmit(e: Event){
   e.preventDefault();

@@ -56,9 +56,14 @@ const router = createRouter({
             component: () => import("../views/User/UserInfoView.vue")
         },
         {
-            path: "/PWChangeView",
+            path: "/PWChange",
             name: "PWChangeView",
             component: () => import("@/views/User/PWChangeView.vue")
+        },
+        {
+            path: "/PwFind",
+            name: "PwFindView",
+            component: () => import("@/views/User/FindPwView.vue")
         },
         {
             path: '/about',
