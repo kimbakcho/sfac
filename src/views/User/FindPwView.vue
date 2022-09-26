@@ -1,5 +1,6 @@
 <template>
   <div>
+    <form style="height: 100%">
     <div id="viewRoot">
       <div id="contentRoot">
         <header>
@@ -11,7 +12,7 @@
           <div class="col-8" id="pwFindDivide">
             <div style="border-bottom: 1px solid black; flex-grow: 1">
             </div>
-            <div style="margin: 0px 15px">
+            <div style="margin: 0 15px">
               패스워드를 변경해 주세요.
             </div>
             <div style="border-bottom: 1px solid black;flex-grow: 1">
@@ -42,16 +43,16 @@
 
           <div>
             <div class="row justify-center" style="margin-bottom: 60px">
-              <button class="col-8 relative-position" id="passFindBtn" v-ripple>
+              <button type="submit" class="col-8 relative-position" id="passFindBtn" v-ripple @click="onFindPw">
                 패드워드 찾기
               </button>
             </div>
           </div>
         </div>
 
-
       </div>
     </div>
+    </form>
   </div>
 </template>
 
@@ -60,8 +61,37 @@ import LoginHeader from "@/components/Login/LoginHeader.vue"
 import BTextInput from "@/components/Etc/BTextInput.vue"
 import {ref} from "vue";
 import UserUseCase from "@/Bis/User/Domain/UserUseCase";
+import axios from "axios";
+import router from "@/router";
+import {useQuasar} from "quasar";
 
 const Email = ref("")
+
+const $q = useQuasar()
+
+async function onFindPw(e: Event) {
+  e.preventDefault()
+
+  if(!Email.value){
+    $q.dialog({
+      message: "E-Mail을 적어 주세요."
+    })
+    return
+  }
+
+  let userUseCase = UserUseCase.getInstance();
+  if(await userUseCase.findPwReq(Email.value)){
+    $q.dialog({
+      message: "email로 변경 메일을 발송 했습니다."
+    }).onDismiss(async ()=>{
+      await router.push({
+        name: "login"
+      })
+    })
+  }
+
+
+}
 
 </script>
 

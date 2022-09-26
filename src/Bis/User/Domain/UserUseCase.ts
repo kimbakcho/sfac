@@ -47,7 +47,7 @@ export default class UserUseCase {
         localStorage.setItem("refresh", refresh)
     }
 
-    async changeUserPw(currentPw: string,newPw: string){
+    async changeUserPw(currentPw: string,newPw: string): Promise<boolean>{
         try{
             Loading.show({
                 message: "변경 하는 중"
@@ -60,11 +60,13 @@ export default class UserUseCase {
             Dialog.create({
                 message: "Pw 변경을 완료 하였습니다."
             })
+            return true;
         }catch (e: any) {
             Loading.hide()
             Dialog.create({
                 message: e.response.data.errorMessage
             })
+            return false;
         }
 
     }
@@ -168,5 +170,45 @@ export default class UserUseCase {
             }, 4 * 60 * 1000)
 
         }
+    }
+
+    async findPwReq(email: string): Promise<boolean>{
+        const form = new FormData();
+        form.append("email",email)
+        try{
+            Loading.show({
+                message: "처리중 입니다."
+            })
+            await axios.post("/user/pwFind/",form);
+            Loading.hide();
+            return true;
+        }catch (e) {
+            Loading.hide();
+            Dialog.create({
+                message: "변경 메일 송신에 실패 하였습니다."
+            })
+            return false;
+        }
+    }
+
+    async findPwChangeReq(token: string,pw: string): Promise<boolean>{
+        let form = new FormData()
+        form.append("token",token)
+        form.append("pw",pw);
+        try{
+            Loading.show({
+                message: "변견중 입니다."
+            })
+            await axios.post("/user/findPwChangeReq/",form)
+            Loading.hide();
+            return  true;
+        }catch (e) {
+            Loading.hide();
+            Dialog.create({
+                message: "PW 변경에 문제가 있습니다."
+            })
+            return false
+        }
+
     }
 }

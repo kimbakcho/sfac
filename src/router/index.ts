@@ -56,6 +56,14 @@ const router = createRouter({
             component: () => import("../views/User/UserInfoView.vue")
         },
         {
+            path: "/PWFindAndChangeView",
+            name: "PWFindAndChangeView",
+            props: route => ({
+                token: route.query.token
+            }),
+            component: ()=>import("../views/User/PWFindAndChangeView.vue")
+        },
+        {
             path: "/PWChange",
             name: "PWChangeView",
             component: () => import("@/views/User/PWChangeView.vue")

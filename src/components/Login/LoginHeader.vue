@@ -1,6 +1,6 @@
 <template>
   <div id="headerRoot">
-    <img src="/logo.png" />
+    <img src="/logo.png" @click="gotoHome"/>
     <div id="brandName">
       <span >
         SFAC
@@ -17,6 +17,13 @@
 </template>
 
 <script setup lang="ts">
+import router from "@/router";
+
+function gotoHome(){
+  router.push({
+    name: "homeIntroView"
+  })
+}
 
 </script>
 
@@ -26,6 +33,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  img{
+    cursor: pointer;
+  }
 }
 #brandName {
   margin-top: 30px;
