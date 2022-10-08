@@ -140,6 +140,38 @@ export default class UserUseCase {
         return signResDto.data
     }
 
+    goNaverLogin(){
+        location.href="https://nid.naver.com/oauth2.0/authorize?response_type=code"+
+            "&client_id=DUAfKHaJOrqluFQFIypi" +
+            `&redirect_uri=${import.meta.env.VITE_RE_DIRECT_URL}` +
+            `&state=naver_${uuidv4()}`
+    }
+    async naverLogin(reqDto: SnsLoginReqDto): Promise<SignUpResDto>{
+        const formData = new FormData();
+        formData.append("code",reqDto.code)
+        formData.append("redirect_uri",reqDto.redirect_uri)
+        formData.append("state",reqDto.state)
+        const signResDto = await axios.post<SignUpResDto>("/user/NaverSignIn/",formData)
+        return signResDto.data
+    }
+
+    goKakaoLogin(){
+        location.href="https://kauth.kakao.com/oauth/authorize"+
+            "?client_id=cd90007c0c8fbf2d5c6fcf0719a1b6bb"+
+            `&redirect_uri=${import.meta.env.VITE_RE_DIRECT_URL}`+
+            "&response_type=code"+
+            `&state=kakao_${uuidv4()}`
+    }
+
+    async kakaoLogin(reqDto: SnsLoginReqDto) {
+        const formData = new FormData();
+        formData.append("code",reqDto.code)
+        formData.append("redirect_uri",reqDto.redirect_uri)
+        formData.append("state",reqDto.state)
+        const signResDto = await axios.post<SignUpResDto>("/user/KakaoSignIn/",formData)
+        return signResDto.data
+    }
+
     async verifyToken(token: string) {
         const formData = new FormData();
         formData.append("token", token)
@@ -231,4 +263,7 @@ export default class UserUseCase {
         }
 
     }
+
+
+
 }

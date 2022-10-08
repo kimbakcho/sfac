@@ -8,11 +8,11 @@
         <i class="spac-googleicon">
         </i>
       </button>
-      <button class="btn">
+      <button class="btn" @click="onLoginNaver">
         <i class="spac-navericon">
         </i>
       </button>
-      <button class="btn">
+      <button class="btn" @click="onLoginKakao">
         <i class="spac-kakaotalk">
         </i>
       </button>
@@ -24,10 +24,16 @@
 import UserUseCase from "@/Bis/User/Domain/UserUseCase";
 import {userStore} from "@/stores/store";
 import router from "@/router";
-
+const userUseCase = UserUseCase.getInstance();
 async function onLoginGoogle(){
-  let userUseCase = UserUseCase.getInstance();
   userUseCase.goGoogleLogin()
+}
+
+async function onLoginNaver(){
+  userUseCase.goNaverLogin()
+}
+async function onLoginKakao(){
+  userUseCase.goKakaoLogin()
 }
 </script>
 

@@ -8,11 +8,11 @@
         <i class="spac-googleicon">
         </i>
       </button>
-      <button class="btn">
+      <button class="btn" @click="goNaverLogin">
         <i class="spac-navericon">
         </i>
       </button>
-      <button class="btn">
+      <button class="btn" @click="goKakaoLogin">
         <i class="spac-kakaotalk">
         </i>
       </button>
@@ -24,10 +24,16 @@
 import {v4 as uuidv4} from "uuid";
 import UserUseCase from "@/Bis/User/Domain/UserUseCase";
 
-function goGoogleLogin() {
-  let userUseCase = UserUseCase.getInstance();
-  userUseCase.goGoogleLogin()
+const userUseCase = UserUseCase.getInstance();
 
+function goGoogleLogin() {
+  userUseCase.goGoogleLogin()
+}
+function goNaverLogin(){
+  userUseCase.goNaverLogin()
+}
+function goKakaoLogin(){
+  userUseCase.goKakaoLogin()
 }
 </script>
 

@@ -38,7 +38,7 @@
                   </BTextInput>
                 </div>
               </div>
-              <div class="row justify-center">
+              <div class="row justify-center" v-if="isSFACUser()">
                 <div class="col-8 relative-position" id="pwChangeBtn" v-ripple @click="gotoPWChange">
                   패스워드 변경 하기
                 </div>
@@ -85,7 +85,9 @@ async function gotoPWChange() {
     name:"PWChangeView"
   })
 }
-
+function isSFACUser(){
+  return userStore1.userInfo!.signUpSite == "SFAC"
+}
 async function onUpdateUserInfo() {
   try{
     $q.loading.show({
