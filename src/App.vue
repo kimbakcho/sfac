@@ -21,3 +21,9 @@
   position: relative;
 }
 </style>
+<style>
+button {
+  background: none;
+  border: none;
+}
+</style>

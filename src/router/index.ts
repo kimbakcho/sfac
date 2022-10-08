@@ -51,6 +51,15 @@ const router = createRouter({
             component: () => import('../views/User/SignUpView.vue')
         },
         {
+            path: "/snsLogin",
+            name: "snsLogin",
+            component: () => import('../views/User/SnsLoginView.vue'),
+            props:(route)=>({
+                state: route.query.state,
+                code: route.query.code,
+            })
+        },
+        {
             path: "/userInfo",
             name: "userInfo",
             component: () => import("../views/User/UserInfoView.vue")

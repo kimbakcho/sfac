@@ -4,24 +4,31 @@
       SNS 회원 가입
     </div>
     <div id="loginButtons">
-      <div class="btn">
+      <button class="btn" @click="goGoogleLogin">
         <i class="spac-googleicon">
         </i>
-      </div>
-      <div class="btn">
+      </button>
+      <button class="btn">
         <i class="spac-navericon">
         </i>
-      </div>
-      <div class="btn">
+      </button>
+      <button class="btn">
         <i class="spac-kakaotalk">
         </i>
-      </div>
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import {v4 as uuidv4} from "uuid";
+import UserUseCase from "@/Bis/User/Domain/UserUseCase";
 
+function goGoogleLogin() {
+  let userUseCase = UserUseCase.getInstance();
+  userUseCase.goGoogleLogin()
+
+}
 </script>
 
 <style scoped lang="scss">

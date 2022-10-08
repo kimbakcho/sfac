@@ -7,6 +7,8 @@ import {
 } from 'quasar'
 import type {UserInfoResDto} from "@/Bis/User/Dto/UserInfoResDto";
 import type {UserInfoReqDto} from "@/Bis/User/Dto/UserInfoReqDto";
+import type {SnsLoginReqDto} from "@/Bis/User/Dto/SnsLoginReqDto";
+import {v4 as uuidv4} from "uuid";
 
 export default class UserUseCase {
     private static instance: UserUseCase;
@@ -117,7 +119,25 @@ export default class UserUseCase {
         userStore1.setUserInfo(null)
         userStore1.setIsLogin(false)
         axios.defaults.headers.common['Authorization'] = ''
+    }
 
+    goGoogleLogin() {
+        location.href="https://accounts.google.com/o/oauth2/v2/auth?scope=openid email"+
+            "&access_type=online"+
+            "&include_granted_scopes=false"+
+            "&response_type=code"+
+            `&state=google_${uuidv4()}` +
+            `&redirect_uri=${import.meta.env.VITE_RE_DIRECT_URL}`+
+            "&client_id=747613190612-2dsp9ppj48grcca77kflliilbe9eimtr.apps.googleusercontent.com"
+    }
+
+    async googleLogin(reqDto: SnsLoginReqDto): Promise<SignUpResDto>{
+        const formData = new FormData();
+        formData.append("code",reqDto.code)
+        formData.append("redirect_uri",reqDto.redirect_uri)
+        formData.append("state",reqDto.state)
+        const signResDto = await axios.post<SignUpResDto>("/user/GoogleSignIn/",formData)
+        return signResDto.data
     }
 
     async verifyToken(token: string) {

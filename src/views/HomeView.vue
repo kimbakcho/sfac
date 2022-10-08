@@ -2,22 +2,22 @@
     <main>
       <header>
         <div class="row justify-between items-center" id="headerRoot">
-          <div class="col-2">
+          <button class="col-2" id="homeBtn"  @click="goToHome">
             <img src="/logo.png" class="relative-position" v-ripple>
-          </div>
+          </button>
           <nav class="col-6 row justify-between items-center">
-            <div class="navBtn" :class="{active : isRouter('CommunityHomeView')}" @click="onGoCommunity">
+            <button class="navBtn" :class="{active : isRouter('CommunityHomeView')}" @click="onGoCommunity">
               Community
-            </div>
-            <div class="navBtn">
+            </button>
+            <button class="navBtn">
               About us
-            </div>
-            <div class="navBtn">
+            </button>
+            <button class="navBtn">
               Trend
-            </div>
-            <div class="navBtn">
+            </button>
+            <button class="navBtn">
               We Project
-            </div>
+            </button>
           </nav>
           <div class="col-3 row items-center justify-end" id="loginButtons">
             <div v-if="isLogin()" class="row items-center justify-end" id="userInfo">
@@ -34,12 +34,12 @@
             </div>
 
             <div v-else class="row items-center justify-end" >
-              <div id="signInBtn" @click="onSignIn">
+              <button id="signInBtn" @click="onSignIn">
                 Sign In
-              </div>
-              <div id="signUpBtn" class="relative-position text-white" v-ripple @click="goSignUp">
+              </button>
+              <button id="signUpBtn" class="relative-position text-white" v-ripple @click="goSignUp">
                 Sing Up
-              </div>
+              </button>
             </div>
           </div>
         </div>
@@ -62,6 +62,12 @@ import {computed} from "vue";
 import {userStore} from "@/stores/store";
 import UserUseCase from "@/Bis/User/Domain/UserUseCase";
 const userStore1 = userStore();
+
+function goToHome(){
+  router.push({
+    name: "homeIntroView"
+  })
+}
 
 function goUserInfo() {
   router.push({
@@ -114,6 +120,9 @@ function isRouter(name: string) {
   margin-top: 124px;
   width: 100%;
 }
+#homeBtn{
+  cursor: pointer;
+}
 header {
   position: fixed;
   top: 0;
@@ -134,6 +143,8 @@ nav{
   padding: 0 59px 0 78px;
   .navBtn {
     cursor: pointer;
+    background: none;
+    border: none;
     color: $mainColor4;
     &:hover{
       color: black;
