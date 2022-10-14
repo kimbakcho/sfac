@@ -74,10 +74,30 @@
 import  PostRow from "@/components/Home/Community/PostRow.vue"
 import type {PostResDto} from "@/Bis/Post/Dto/PostResDto";
 import router from "@/router";
+import {userStore} from "@/stores/store";
+import {useQuasar} from "quasar";
+
+const userStore1 = userStore();
+
+const $q = useQuasar()
+
 function onGoWritePage(){
-  router.push({
-    name: "CommunityPostWriteView"
-  })
+  if(!userStore1.isLogin){
+    $q.dialog({
+      message: "로그인이 필요 합니다.",
+      title: "글 작성하기"
+    }).onOk(()=>{
+      router.push({
+        name: "login"
+      })
+      return
+    })
+  }else {
+    router.push({
+      name: "CommunityPostWriteView"
+    })
+  }
+
 }
 const posts = [
   {

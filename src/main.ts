@@ -48,7 +48,6 @@ app.use(Quasar, {
     lang: quasarLang,
 })
 
-
 app.use(createPinia())
 app.use(router)
 

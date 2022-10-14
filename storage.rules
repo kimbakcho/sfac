@@ -5,5 +5,9 @@ service firebase.storage {
       allow read;
       allow write: if request.resource.size < 1024 * 1024;
     }
+    match /postImg/{imageFile} {
+          allow read;
+          allow write: if request.resource.size < 10240 * 1024;
+        }
   }
 }

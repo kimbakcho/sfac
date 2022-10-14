@@ -88,7 +88,8 @@ async function gotoPWChange() {
 function isSFACUser(){
   return userStore1.userInfo!.signUpSite == "SFAC"
 }
-async function onUpdateUserInfo() {
+async function onUpdateUserInfo(e: Event) {
+  e.preventDefault();
   try{
     $q.loading.show({
       message: "유저의 정보를 변경하는중 입니다."
