@@ -2,7 +2,8 @@ import type {UserInfoResDto} from "@/Bis/User/Dto/UserInfoResDto";
 
 
 export interface PostResDto {
-    mainImgUrl?: string;
+    id: number;
+    mainImageUrl?: string;
     title: string;
     bodyContent: string;
     writeDate: string;

@@ -38,10 +38,14 @@ export default class FireStorageUseCase {
         return await getDownloadURL(result!.ref)
     }
 
-    async uploadPostImage(data: string): Promise<string>{
+    async uploadPostImage(data: string| File): Promise<string>{
         const storageRef = fRef(FireStorageUseCase.storage, `/postImg/${uuidv4()}.png`);
         let result: UploadResult | null = null
-        result = await uploadString(storageRef,data,'base64')
+        if(typeof data == 'string') {
+            result = await uploadString(storageRef,data,'base64')
+        }else if(data instanceof File) {
+            result = await uploadBytes(storageRef,data)
+        }
         return await getDownloadURL(result!.ref)
     }
 }

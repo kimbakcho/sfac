@@ -72,7 +72,7 @@ async function snsLogin(signUpResDto: SignUpResDto){
 
   userStore1.setUserInfo(signUpResDto.userInfo)
   userStore1.setIsLogin(true)
-  userUseCase.setToken(signUpResDto.access, signUpResDto.refresh)
+  await userUseCase.setToken(signUpResDto.access, signUpResDto.refresh)
 
   userUseCase.refreshTokenSchStart();
   await router.push({

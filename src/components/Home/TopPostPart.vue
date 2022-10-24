@@ -23,7 +23,7 @@ const posts = [
     user: {
       profileImgUrl: "userexample1.png",
       nickName: "백구",
-      id: 3
+      user: 3
     } as UserInfoResDto
   },
   {
@@ -38,7 +38,7 @@ const posts = [
     user: {
       profileImgUrl: "userexample1.png",
       nickName: "백구",
-      id: 3
+      user: 3
     } as UserInfoResDto
   },
   {
@@ -53,7 +53,7 @@ const posts = [
     user: {
       profileImgUrl: "userexample1.png",
       nickName: "백구",
-      id: 3
+      user: 3
     } as UserInfoResDto
   },
 ]

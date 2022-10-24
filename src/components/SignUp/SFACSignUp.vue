@@ -74,7 +74,7 @@ async function onSubmit(e: Event){
       let userStore1 = userStore();
       userStore1.setUserInfo(signResDto.userInfo)
       userStore1.setIsLogin(true)
-      userUseCase.setToken(signResDto.access,signResDto.refresh)
+      await userUseCase.setToken(signResDto.access,signResDto.refresh)
 
       userUseCase.refreshTokenSchStart();
       await router.push({
@@ -87,7 +87,7 @@ async function onSubmit(e: Event){
       })
     }
   }catch (e) {
-    console.log(e)
+
     $q.dialog({
       message: "파일 업로드에 문제가 있습니다. \n 용량은 1MB 이하여야 합니다.",
     })

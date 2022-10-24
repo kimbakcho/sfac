@@ -15,7 +15,7 @@
           <label for="topic">
             토픽
           </label>
-            <select name="topic" id="topic">
+            <select name="topic" id="topic" v-model="reqDto.category1">
               <option value="">토픽을 선택해 주세요</option>
               <option value="Tech And Talk">Tech & Talk</option>
               <option value="lifeTalk">사는 이야기</option>
@@ -28,7 +28,7 @@
               제목
             </label>
           </div>
-          <input type="text" id="title" placeholder="제목을 입력해주세요">
+          <input type="text" id="title" v-model="reqDto.title" placeholder="제목을 입력해주세요">
         </div>
         <div id="titleImgArea">
           <div id="titleImage">
@@ -48,7 +48,7 @@
             상세 정보
           </div>
           <Editor
-              v-model="content"
+              v-model="reqDto.bodyContent"
               tinymce-script-src="/tinymce/tinymce.min.js"
                   :init="{ plugins: 'lists link image table code help emoticons media',
                   toolbar: 'undo redo | emoticons | styles | fontfamily fontsize bold italic | forecolor backcolor | alignleft aligncenter alignright alignjustify | outdent indent',
@@ -70,20 +70,61 @@
 <script setup lang="ts">
 import BImageAttachments from "@/components/Etc/BImageAttachments.vue"
 import type {ImageAttachFile} from "@/components/Etc/Dto/ImageAttachFile";
-import {onMounted, ref} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import Editor from '@tinymce/tinymce-vue'
 import {imageUpload} from "@/Bis/TinyMceUtil/TinyMceUtil"
+import PostUseCase from "@/Bis/Post/Domain/PostUseCase";
+import type {PostReqDto} from "@/Bis/Post/Dto/PostReqDto";
+import {useQuasar} from "quasar";
+import FireStorageUseCase from "@/Bis/FireStore/FireStorageUseCase";
+import router from "@/router";
 const editorSlot = ref<HTMLElement | null>()
 
-const attachMainImg = [] as ImageAttachFile[]
-const content = ref("")
+const attachMainImg = ref<Array<ImageAttachFile>>([]);
+const reqDto = reactive<PostReqDto>({
+  title: "",
+  mainImageUrl: "",
+  category1 : "",
+  bodyContent: ""
+})
 onMounted(()=>{
 
 })
+const $q = useQuasar()
 
-function onWrite(e: Event){
+async function onWrite(e: Event){
   e.preventDefault()
-  console.log(content.value)
+  const postUseCase = PostUseCase.getInstance();
+  $q.loading.show({
+    message: "글을 업로드 중입니다."
+  })
+  try{
+    let mainImageUrl = ""
+    if(attachMainImg.value.length > 0 && attachMainImg.value[0].file) {
+      const fireStorageUseCase = FireStorageUseCase.getInstance();
+      mainImageUrl = await fireStorageUseCase.uploadPostImage(attachMainImg.value[0].file)
+    }
+    const post =  await postUseCase.postWrite({
+      title: reqDto.title,
+      bodyContent: reqDto.bodyContent,
+      category1: reqDto.category1,
+      mainImageUrl: mainImageUrl
+    })
+    await router.push({
+      name: "CommunityPost",
+      params: {
+        id: post.id
+      }
+    })
+
+    $q.loading.hide()
+  }catch (e) {
+    $q.loading.hide()
+    $q.dialog({
+      message: "작성에 실패 했습니다."
+    })
+  }
+
 }
 
 </script>

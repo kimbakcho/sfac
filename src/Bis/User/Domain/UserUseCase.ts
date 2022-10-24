@@ -9,6 +9,9 @@ import type {UserInfoResDto} from "@/Bis/User/Dto/UserInfoResDto";
 import type {UserInfoReqDto} from "@/Bis/User/Dto/UserInfoReqDto";
 import type {SnsLoginReqDto} from "@/Bis/User/Dto/SnsLoginReqDto";
 import {v4 as uuidv4} from "uuid";
+import firebase from "firebase/compat";
+import {firebaseApp} from "@/main";
+import { getAuth,signInWithCustomToken,signOut } from "firebase/auth";
 
 export default class UserUseCase {
     private static instance: UserUseCase;
@@ -43,9 +46,10 @@ export default class UserUseCase {
         return axiosResponse.data
     }
 
-    setToken(access: string, refresh: string) {
+    async setToken(access: string, refresh: string): Promise<void> {
         localStorage.setItem("access", access)
         axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("access")}`;
+        await this.fireBaseLogin();
         localStorage.setItem("refresh", refresh)
     }
 
@@ -89,8 +93,7 @@ export default class UserUseCase {
             });
 
             let data = axiosResponse.data;
-            this.setToken(data.access,data.refresh)
-            axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("access")}`;
+            await this.setToken(data.access,data.refresh)
             let userUseCase = UserUseCase.getInstance();
             let userInfoResDto = await userUseCase.getUserInfo();
             userStore1.setUserInfo(userInfoResDto)
@@ -119,6 +122,8 @@ export default class UserUseCase {
         userStore1.setUserInfo(null)
         userStore1.setIsLogin(false)
         axios.defaults.headers.common['Authorization'] = ''
+        const auth = getAuth(firebaseApp);
+        signOut(auth)
     }
 
     goGoogleLogin() {
@@ -172,6 +177,16 @@ export default class UserUseCase {
         return signResDto.data
     }
 
+    async fireBaseLogin(): Promise<void>{
+        const token = await axios.post<{token: string}>("/user/FireBaseToken/")
+        const auth = getAuth(firebaseApp);
+        try{
+            await signInWithCustomToken(auth,token.data.token)
+        }catch (e) {
+            throw e
+        }
+    }
+
     async verifyToken(token: string) {
         const formData = new FormData();
         formData.append("token", token)
@@ -182,9 +197,9 @@ export default class UserUseCase {
             }
 
         } catch (e: any) {
-            Dialog.create({
-                message: e.response.data.detail
-            })
+            // Dialog.create({
+            //     message: e.response.data.detail
+            // })
             return false;
         }
         return false;
@@ -211,9 +226,7 @@ export default class UserUseCase {
             userStore1.reFreshTokenSchId = setInterval(async () => {
                 try {
                     const resultToken = await this.getTokenFromRefreshToken(refresh)
-                    localStorage.setItem("access", resultToken.access)
-                    localStorage.setItem("refresh", resultToken.refresh)
-                    axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("access")}`;
+                    await this.setToken(resultToken.access, resultToken.refresh)
                 } catch (e) {
                     Dialog.create({
                         message: "refreshToken 에 문제가 있습니다."
@@ -261,8 +274,9 @@ export default class UserUseCase {
             })
             return false
         }
-
     }
+
+
 
 
 

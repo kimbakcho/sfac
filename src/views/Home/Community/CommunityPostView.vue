@@ -4,14 +4,14 @@
       <div id="title">
         {{post.title}}
       </div>
-      <img :src="post.mainImgUrl" id="mainImage">
+      <img :src="post.mainImageUrl" id="mainImage">
 
       <div id="content">
         <div id="writerInfo">
           <div id="user">
-            <img :src="post.writeUser.userImg">
+            <img :src="post.writeUser.profileImgUrl">
             <div id="userName">
-              {{post.writeUser.userNickName}}
+              {{post.writeUser.nickName}}
             </div>
             <div id="writeDate">
               {{post.writeDate}}
@@ -20,39 +20,45 @@
           <i class="spac-heart-solid" id="heart">
           </i>
         </div>
-        <div id="bodyContent">
-          {{post.bodyContent}}
+        <div id="bodyContent" v-html="post.bodyContent">
+
         </div>
 
-        <ReplyComponent class="replyComponent">
+<!--        <ReplyComponent class="replyComponent">-->
 
-        </ReplyComponent>
+<!--        </ReplyComponent>-->
 
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import {defineProps, ref} from "vue";
-import type {PostResDto} from "@/Bis/Post/Dto/PostResDto";
-import ReplyComponent from "@/components/Reply/ReplyComponent.vue"
+<script lang="ts">
+import {defineComponent} from "vue";
+import PostUseCase from "@/Bis/Post/Domain/PostUseCase";
 
-const props = defineProps(['id'])
-
-const post = ref<PostResDto>({
-  title: "OPC는 어디서 시작 되었을까?",
-  writeDate: "2022/02/02",
-  bodyContent: "temp",
-  mainImgUrl: "/samplepostimage.png",
-  writeUser: {
-    userImg: "/cheese_1.png",
-    userNickName: "치즈"
-  },
-  likeCount: 0,
-  viewCount: 0,
-  replyCount: 3
+export default defineComponent({
+  async beforeRouteEnter(to:any, from, next: any) {
+    const id = to.params.id
+    const postUseCase = PostUseCase.getInstance();
+    to.params.post = await postUseCase.getPost(Number(id))
+    next()
+  }
 })
+
+</script>
+
+
+<script setup lang="ts">
+import {defineProps, onMounted, ref} from "vue";
+import ReplyComponent from "@/components/Reply/ReplyComponent.vue"
+import type {PostResDto} from "@/Bis/Post/Dto/PostResDto";
+
+const props = defineProps<{id: string,post: PostResDto}>()
+onMounted(()=>{
+
+})
+
 </script>
 
 <style scoped lang="scss">
