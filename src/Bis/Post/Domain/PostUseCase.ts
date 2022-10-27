@@ -1,6 +1,7 @@
 import type {PostReqDto} from "@/Bis/Post/Dto/PostReqDto";
 import type {PostResDto} from "@/Bis/Post/Dto/PostResDto";
 import axios from "axios";
+import type {PageWrap} from "@/Bis/Util/Dto/PageWrap";
 
 export default  class PostUseCase {
 
@@ -25,7 +26,7 @@ export default  class PostUseCase {
         if(reqDto.mainImageUrl){
             formData.append("mainImageUrl",reqDto.mainImageUrl);
         }
-        const axiosResponse = await axios.post("/post/posts/",formData)
+        const axiosResponse = await axios.post("/post/createPost/",formData)
         return axiosResponse.data
     }
 
@@ -33,4 +34,14 @@ export default  class PostUseCase {
         const { data }  = await axios.get(`/post/post/${id}/`)
         return data
     }
+
+    async getPosts(page: number): Promise<PageWrap<PostResDto>> {
+        const { data } = await axios.get("/post/posts/",{
+            params: {
+                page: page
+            }
+        })
+        return data;
+    }
+
 }

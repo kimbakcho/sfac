@@ -178,8 +178,9 @@ export default class UserUseCase {
     }
 
     async fireBaseLogin(): Promise<void>{
+        console.log("fireBaseLogin")
         const token = await axios.post<{token: string}>("/user/FireBaseToken/")
-        const auth = getAuth(firebaseApp);
+        const auth = getAuth(firebaseApp)
         try{
             await signInWithCustomToken(auth,token.data.token)
         }catch (e) {

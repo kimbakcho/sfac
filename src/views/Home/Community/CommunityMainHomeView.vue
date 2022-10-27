@@ -47,7 +47,7 @@
          </div>
        </div>
        <div id="posts">
-         <PostRow v-for="post in posts" :post="post">
+         <PostRow v-for="post in pageResult.results" :post="post">
 
          </PostRow>
        </div>
@@ -76,10 +76,20 @@ import type {PostResDto} from "@/Bis/Post/Dto/PostResDto";
 import router from "@/router";
 import {userStore} from "@/stores/store";
 import {useQuasar} from "quasar";
+import {onMounted, reactive, ref} from "vue";
+import PostUseCase from "@/Bis/Post/Domain/PostUseCase";
+import type {PageWrap} from "@/Bis/Util/Dto/PageWrap";
 
 const userStore1 = userStore();
 
 const $q = useQuasar()
+
+const pageResult = ref<PageWrap<PostResDto>>({
+  results: [],
+  count: 0,
+  next: null,
+  previous: null
+})
 
 function onGoWritePage(){
   if(!userStore1.isLogin){
@@ -97,62 +107,16 @@ function onGoWritePage(){
       name: "CommunityPostWriteView"
     })
   }
-
 }
-const posts = [
-  {
-    title: "ModBus 가 뭔가요?",
-    replyCount: 0,
-    viewCount: 0,
-    likeCount: 0,
-    writeUser: {
-      userImg: "/cheese_1.png",
-      userNickName: "치즈",
-    },
-    mainImgUrl: "",
-    bodyContent: "",
-    writeDate: "2022/02/22"
-  },
-  {
-    title: "ModBus 가 뭔가요?",
-    replyCount: 0,
-    viewCount: 0,
-    likeCount: 0,
-    writeUser: {
-      userImg: "/cheese_1.png",
-      userNickName: "치즈",
-    },
-    mainImgUrl: "",
-    bodyContent: "",
-    writeDate: "2022/02/22"
-  },
-  {
-    title: "ModBus 가 뭔가요?",
-    replyCount: 0,
-    viewCount: 0,
-    likeCount: 0,
-    writeUser: {
-      userImg: "/cheese_1.png",
-      userNickName: "치즈",
-    },
-    mainImgUrl: "",
-    bodyContent: "",
-    writeDate: "2022/02/22"
-  },
-  {
-    title: "Protocol Convering 작업 도와 주실분 ?",
-    replyCount: 0,
-    viewCount: 0,
-    likeCount: 0,
-    writeUser: {
-      userImg: "/cheese_1.png",
-      userNickName: "치즈",
-    },
-    mainImgUrl: "",
-    bodyContent: "",
-    writeDate: "2022/02/22"
-  }
-] as PostResDto[]
+onMounted( ()=>{
+   loadPage(1)
+})
+
+async function loadPage(page: number){
+  const postUseCase = PostUseCase.getInstance();
+  pageResult.value = await postUseCase.getPosts(1)
+}
+
 </script>
 
 <style lang="scss">

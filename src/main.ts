@@ -34,6 +34,7 @@ const firebaseConfig = {
     measurementId: "G-67GD8S93C7"
 };
 
+
 // Initialize Firebase
 export const firebaseApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(firebaseApp);
@@ -60,8 +61,7 @@ if(refresh){
         if(verifyResult){
             let userStore1 = userStore();
             const resultToken = await userUseCase.getTokenFromRefreshToken(refresh)
-            localStorage.setItem("access",resultToken.access)
-            localStorage.setItem("refresh",resultToken.refresh)
+            await userUseCase.setToken(resultToken.access,resultToken.refresh)
             axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("access")}`;
             userStore1.setUserInfo(await userUseCase.getUserInfo())
             userStore1.setIsLogin(true)

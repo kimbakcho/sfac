@@ -1,9 +1,9 @@
 <template>
   <div id="rowRoot">
     <div id="writeInfo">
-      <img  id="userImg" :src="post.writeUser.userImg" >
+      <img  id="userImg" :src="post.writeUser.profileImgUrl" >
       <div id="nickName">
-        {{post.writeUser.userNickName}}
+        {{post.writeUser.nickName}}
       </div>
       <div id="writeTime">
         38분전
