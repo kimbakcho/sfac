@@ -167,6 +167,9 @@ async function onWrite(e: Event){
         border: 1px solid $mainColor4;
         border-radius: 10px;
         margin-top: 9px;
+        &::placeholder {
+          font-size: 22px;
+        }
       }
     }
     #topicArea {

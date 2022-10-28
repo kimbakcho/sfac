@@ -6,7 +6,7 @@
         {{post.writeUser.nickName}}
       </div>
       <div id="writeTime">
-        38분전
+        {{ getWriteTime() }}
       </div>
     </div>
     <div id="postTitle">
@@ -33,10 +33,18 @@
 <script setup lang="ts">
 import {defineProps} from "vue";
 import type {PostResDto} from "@/Bis/Post/Dto/PostResDto";
+import TimeUtil from "@/Bis/Util/UseCase/TimeUtil";
+import {DateTime} from "luxon";
 
 const props = defineProps<{
   post: PostResDto
 }>()
+
+function getWriteTime() {
+  let timeUtil = TimeUtil.getInstance();
+  return timeUtil.nowDiffTimeStr(DateTime.fromISO(props.post.writeDate))
+}
+
 </script>
 
 <style scoped lang="scss">

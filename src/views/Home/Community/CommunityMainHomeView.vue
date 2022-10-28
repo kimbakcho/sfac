@@ -37,30 +37,16 @@
              <img src="search_1.png">
            </div>
          </div>
-         <div id="topPagination">
-           <div class="pageBtn" >
-             <img src="arrowback.png">
-           </div>
-           <div class="pageBtn hasPage">
-             <img src="arrowforword.png">
-           </div>
-         </div>
        </div>
        <div id="posts">
-         <PostRow v-for="post in pageResult.results" :post="post">
+         <PostRow v-for="post in communityStore1.pageResult.results" :post="post" @click="onPostClick(post)">
 
          </PostRow>
        </div>
        <div class="row justify-center items-center" id="bottomPaginationArea">
 
-         <div class="pageBtn" >
-           <img src="arrowback.png">
-         </div>
-         <div class="pageBtn hasPage">
-           <img src="arrowforword.png">
-         </div>
          <div class="col-6" id="pagination">
-           <q-pagination  :max="100" flat :max-pages="10" :model-value="2" active-color="primary"  color="grey-4" id="qpage">
+           <q-pagination  :max="maxPage" flat :max-pages="10" :model-value="communityStore1.currentPageNumber" active-color="primary" @update:model-value="onChangePage" color="grey-4" id="qpage">
 
            </q-pagination>
          </div>
@@ -74,7 +60,7 @@
 import  PostRow from "@/components/Home/Community/PostRow.vue"
 import type {PostResDto} from "@/Bis/Post/Dto/PostResDto";
 import router from "@/router";
-import {userStore} from "@/stores/store";
+import {communityStore, userStore} from "@/stores/store";
 import {useQuasar} from "quasar";
 import {onMounted, reactive, ref} from "vue";
 import PostUseCase from "@/Bis/Post/Domain/PostUseCase";
@@ -84,12 +70,18 @@ const userStore1 = userStore();
 
 const $q = useQuasar()
 
-const pageResult = ref<PageWrap<PostResDto>>({
-  results: [],
-  count: 0,
-  next: null,
-  previous: null
-})
+function onPostClick(post: PostResDto){
+  router.push({
+    name: "CommunityPost",
+    params: {
+      id: post.id
+    }
+  })
+}
+
+const communityStore1 = communityStore();
+
+const maxPage = ref(0)
 
 function onGoWritePage(){
   if(!userStore1.isLogin){
@@ -112,9 +104,15 @@ onMounted( ()=>{
    loadPage(1)
 })
 
+function onChangePage(page: number){
+  communityStore1.currentPageNumber = page
+  loadPage(page)
+}
+
 async function loadPage(page: number){
   const postUseCase = PostUseCase.getInstance();
-  pageResult.value = await postUseCase.getPosts(1)
+  communityStore1.pageResult = await postUseCase.getPosts(page)
+  maxPage.value  = Math.floor(communityStore1.pageResult.count / 10) + (communityStore1.pageResult.count % 10 ? 1 : 0)
 }
 
 </script>

@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import type {UserInfoResDto} from "@/Bis/User/Dto/UserInfoResDto";
+import type {PageWrap} from "@/Bis/Util/Dto/PageWrap";
+import type {PostResDto} from "@/Bis/Post/Dto/PostResDto";
 
 
 export const userStore = defineStore({
@@ -21,4 +23,17 @@ export const userStore = defineStore({
       this.userInfo = resDto
     }
   }
+})
+
+export const communityStore = defineStore({
+  id: "communityStore",
+  state: () => ({
+    pageResult: {
+      results: [],
+      next: null,
+      previous: null,
+      count: 0
+    } as PageWrap<PostResDto>,
+    currentPageNumber: 1
+  })
 })
