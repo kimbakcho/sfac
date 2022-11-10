@@ -7,6 +7,7 @@ export interface PostResDto {
     title: string;
     bodyContent: string;
     writeDate: string;
+    category1: string;
     replyCount: number;
     viewCount: number;
     likeCount: number;

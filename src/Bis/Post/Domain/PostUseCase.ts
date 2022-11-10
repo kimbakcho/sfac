@@ -2,6 +2,7 @@ import type {PostReqDto} from "@/Bis/Post/Dto/PostReqDto";
 import type {PostResDto} from "@/Bis/Post/Dto/PostResDto";
 import axios from "axios";
 import type {PageWrap} from "@/Bis/Util/Dto/PageWrap";
+import type {PostModifyReqDto} from "@/Bis/Post/Dto/PostModifyReqDto";
 
 export default  class PostUseCase {
 
@@ -27,6 +28,18 @@ export default  class PostUseCase {
             formData.append("mainImageUrl",reqDto.mainImageUrl);
         }
         const axiosResponse = await axios.post("/post/createPost/",formData)
+        return axiosResponse.data
+    }
+
+    async postModify(reqDto: PostModifyReqDto): Promise<PostResDto>{
+        const formData = new FormData();
+        formData.append("title",reqDto.title);
+        formData.append("category1",reqDto.category1);
+        formData.append("bodyContent",reqDto.bodyContent);
+        if(reqDto.mainImageUrl){
+            formData.append("mainImageUrl",reqDto.mainImageUrl);
+        }
+        const axiosResponse = await axios.put(`/post/post/${reqDto.id}/`,formData)
         return axiosResponse.data
     }
 

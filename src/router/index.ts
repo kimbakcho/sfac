@@ -29,9 +29,10 @@ const router = createRouter({
                         name: "CommunityPostWriteView",
                         component: () => import("../views/Home/Community/CommunityPostWriteView.vue")
                     }, {
-                        path: "modify",
+                        path: "modify/:id",
                         name: "CommunityPostModifyView",
-                        component: () => import("../views/Home/Community/CommunityPostModifyView.vue")
+                        component: () => import("../views/Home/Community/CommunityPostModifyView.vue"),
+                        props: true
                     }, {
                         path: "post/:id",
                         name: "CommunityPost",
@@ -55,7 +56,7 @@ const router = createRouter({
             path: "/snsLogin",
             name: "snsLogin",
             component: () => import('../views/User/SnsLoginView.vue'),
-            props:(route)=>({
+            props: (route) => ({
                 state: route.query.state,
                 code: route.query.code,
             })
@@ -71,7 +72,7 @@ const router = createRouter({
             props: route => ({
                 token: route.query.token
             }),
-            component: ()=>import("../views/User/PWFindAndChangeView.vue")
+            component: () => import("../views/User/PWFindAndChangeView.vue")
         },
         {
             path: "/PWChange",

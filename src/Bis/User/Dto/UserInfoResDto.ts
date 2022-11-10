@@ -1,6 +1,6 @@
 export interface UserInfoResDto {
     profileImgUrl: string,
     nickName: string,
-    user: number,
+    id: number,
     signUpSite: string
 }

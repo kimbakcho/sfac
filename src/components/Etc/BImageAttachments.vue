@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="display: flex;column-gap: 20px">
-      <div v-for="(item,index) in imgFiles" class="attachItem shadow-4"  :key="index">
+      <div v-for="(item,index) in modelValue" class="attachItem shadow-4"  :key="index">
         <img :src="getImgSrc(item)" class="attachImg">
         <button class="deleteBtn" @click="onDeleteItem(index)">
           <q-icon name="close" size="1.5rem">
@@ -9,12 +9,13 @@
           </q-icon>
         </button>
       </div>
-      <div v-if="imgFiles.length < limitCount">
+      <div v-if="modelValue.length < limitCount">
         <label for="fileItem" id="mainImageLabel" class="shadow-4">
           <img src="/image_file_add.png">
         </label>
         <input type="file" id="fileItem" hidden accept="image/png, image/gif, image/jpeg" @input="onInputFile">
       </div>
+
     </div>
   </div>
 </template>
@@ -32,21 +33,21 @@ const props = withDefaults(defineProps<{
 })
 
 function onDeleteItem(index: number){
-  imgFiles.value.splice(index,1)
+  props.modelValue.splice(index,1)
 }
 
-const imgFiles = ref<Array<ImageAttachFile>>([]);
 const emits = defineEmits<{
   (e:"update:modelValue", value: Array<ImageAttachFile>): void
 }>()
+
 async function onInputFile(e: Event){
   const target = e.target as HTMLInputElement
   const file = target.files![0];
   let item = {} as ImageAttachFile;
   item.file = file
   item.base64Url = await readFileToBase64Url(file)
-  imgFiles.value.push(item)
-  emits("update:modelValue",imgFiles.value)
+  props.modelValue.push(item)
+  emits("update:modelValue",props.modelValue)
 }
 
 function readFileToBase64Url(file: File): Promise<string>{
